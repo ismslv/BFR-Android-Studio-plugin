@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.7.3'
+}
+
+group 'com.bfr'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+configurations {
+    extraLibs
+}
+
+dependencies {
+    extraLibs 'com.github.vidstige:jadb:v1.2.1'
+    configurations.compile.extendsFrom(configurations.extraLibs)
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+jar {
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it)}
+    }
+}
+
+intellij {
+    version '2020.2.4'
+    updateSinceUntilBuild false
+    plugins = ['com.intellij.java']
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishPlugin {
+    token = System.getenv("INTELLIJ_PUBLISH_TOKEN")
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

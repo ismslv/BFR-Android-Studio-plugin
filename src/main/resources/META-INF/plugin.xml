@@ -1,0 +1,193 @@
+<idea-plugin>
+    <id>com.bfr.pluginandroidstudio</id>
+    <name>BFR Menu</name>
+    <vendor email="is@bluefrogrobotics.com" url="bluefrogrobotics.com">BFR</vendor>
+
+    <description><![CDATA[
+        <h3>Android Studio special menu for Blue Frog Robotics robot Buddy.</h3>
+        <ul>
+        <li><b>adb</b> and <b>scrcpy</b> should be in your PATH variable!</li>
+        <li>Download them here: <a href="https://github.com/Genymobile/scrcpy/releases/latest">https://github.com/Genymobile/scrcpy/releases/latest</a></li>
+        <li>How to add to PATH: <a href="https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/">https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/</a></li>
+        <li>To build, make sure you have JAVA_HOME with a path to Java in the PATH (System) too.</li>
+        <li>Normally path to Java will be like <i>C:\Users\username\AppData\Local\JetBrains\Toolbox\apps\AndroidStudio\ch-0\203.7784292\jre</i></li>
+        </ul>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="193"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <actions>
+        <group id="group_bfr" text="BFR">
+            <add-to-group group-id="MainMenu" anchor="after" relative-to-action="ToolsMenu" />
+            <action id="device_connected"
+                    class="com.bfr.pluginandroidstudio.action.ConnectedAction"
+                    text="No device">
+            </action>
+            <action id="device_connect"
+                    class="com.bfr.pluginandroidstudio.action.ConnectAction"
+                    text="Connect">
+            </action>
+            <group id="group_robot" text="Robot" popup="true" icon="PluginIcons.BUDDY">
+                <action id="device_remember"
+                        class="com.bfr.pluginandroidstudio.action.DeviceConnectAction"
+                        text="Save robot">
+                </action>
+                <action id="device_forget"
+                        class="com.bfr.pluginandroidstudio.action.DeviceConnectAction"
+                        text="Delete robot...">
+                </action>
+                <action id="devices_connect"
+                        class="com.bfr.pluginandroidstudio.action.DeviceConnectAction"
+                        text="Connect robot...">
+                </action>
+            </group>
+            <separator />
+            <action id="device_scrcpy"
+                    class="com.bfr.pluginandroidstudio.action.DeviceAction"
+                    text="Show screen">
+            </action>
+            <group id="group_android" text="Android" popup="true" icon="PluginIcons.ANDROID">
+                <action id="device_settings"
+                        class="com.bfr.pluginandroidstudio.action.DeviceAction"
+                        text="Open Settings">
+                </action>
+                <action id="device_apps"
+                        class="com.bfr.pluginandroidstudio.action.DeviceAction"
+                        text="Open Apps list">
+                </action>
+                <action id="device_wifi"
+                        class="com.bfr.pluginandroidstudio.action.DeviceAction"
+                        text="Open WiFi settings">
+                </action>
+            </group>
+            <!--                <action id="device_reboot"-->
+            <!--                        class="com.bfr.pluginandroidstudio.action.DeviceAction"-->
+            <!--                        text="Reboot">-->
+            <!--                </action>-->
+            <action id="device_shutdown"
+                    class="com.bfr.pluginandroidstudio.action.DeviceAction"
+                    text="Shutdown">
+            </action>
+            <separator />
+            <group id="group_apps" text="Apps" popup="true" icon="PluginIcons.APPS">
+                <group id="group_apps_all" text="Everything" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_all_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_all_install"
+                            text="Install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_all_uninstall"
+                            text="Uninstall"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_all_stop"
+                            text="Stop"/>
+                </group>
+                <separator />
+                <group id="group_apps_core" text="Core" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_core_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_core_install"
+                            text="Install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_core_uninstall"
+                            text="Uninstall"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_core_stop"
+                            text="Stop"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_core_launch"
+                            text="Launch"/>
+                </group>
+                <group id="group_apps_updater" text="Updater" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_updater_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_updater_install"
+                            text="Install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_updater_uninstall"
+                            text="Uninstall"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_updater_stop"
+                            text="Stop"/>
+                </group>
+                <separator />
+                <group id="group_apps_usb" text="USB Service" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_usb_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_usb_install"
+                            text="Install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_usb_uninstall"
+                            text="Uninstall"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_usb_stop"
+                            text="Stop"/>
+                </group>
+                <group id="group_apps_speech" text="Speech Service" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_speech_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_speech_install"
+                            text="Install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_speech_uninstall"
+                            text="Uninstall"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_speech_stop"
+                            text="Stop"/>
+                </group>
+                <group id="group_apps_vision" text="Vision Service" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_vision_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_vision_install"
+                            text="Install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_vision_uninstall"
+                            text="Uninstall"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_vision_stop"
+                            text="Stop"/>
+                </group>
+            </group>
+            <separator />
+            <action id="config_push"
+                    class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                    text="Send configs to device...">
+            </action>
+            <action id="config_pull"
+                    class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                    text="Get configs from device...">
+            </action>
+            <action id="config_remove"
+                    class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                    text="Revert configs to default...">
+            </action>
+            <separator />
+            <action id="devmode_on"
+                    class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                    text="Switch to dev mode">
+            </action>
+            <action id="devmode_off"
+                    class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                    text="Switch to prod mode">
+            </action>
+        </group>
+    </actions>
+</idea-plugin>
