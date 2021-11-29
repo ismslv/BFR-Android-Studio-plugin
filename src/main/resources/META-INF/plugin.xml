@@ -95,6 +95,9 @@
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_core_build"
                             text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.FileAction"
+                            id="app_core_showfile"
+                            text="Show file"/>
                     <action class="com.bfr.pluginandroidstudio.action.InstallAction"
                             id="app_core_install"
                             text="Install"/>
@@ -112,6 +115,9 @@
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_updater_build"
                             text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.FileAction"
+                            id="app_updater_showfile"
+                            text="Show file"/>
                     <action class="com.bfr.pluginandroidstudio.action.InstallAction"
                             id="app_updater_install"
                             text="Install"/>
@@ -127,6 +133,9 @@
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_usb_build"
                             text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.FileAction"
+                            id="app_usb_showfile"
+                            text="Show file"/>
                     <action class="com.bfr.pluginandroidstudio.action.InstallAction"
                             id="app_usb_install"
                             text="Install"/>
@@ -141,6 +150,9 @@
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_speech_build"
                             text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.FileAction"
+                            id="app_speech_showfile"
+                            text="Show file"/>
                     <action class="com.bfr.pluginandroidstudio.action.InstallAction"
                             id="app_speech_install"
                             text="Install"/>
@@ -155,6 +167,9 @@
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_vision_build"
                             text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.FileAction"
+                            id="app_vision_showfile"
+                            text="Show file"/>
                     <action class="com.bfr.pluginandroidstudio.action.InstallAction"
                             id="app_vision_install"
                             text="Install"/>
@@ -166,18 +181,26 @@
                             text="Stop"/>
                 </group>
             </group>
+            <group id="group_sdk" text="SDK" popup="true">
+                <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                        id="app_sdk_build"
+                        text="Build"/>
+                <action class="com.bfr.pluginandroidstudio.action.FileAction"
+                        id="app_sdk_showfile"
+                        text="Show file"/>
+            </group>
             <separator />
             <action id="config_push"
                     class="com.bfr.pluginandroidstudio.action.ConfigAction"
-                    text="Send configs to device...">
+                    text="Send configs...">
             </action>
             <action id="config_pull"
                     class="com.bfr.pluginandroidstudio.action.ConfigAction"
-                    text="Get configs from device...">
+                    text="Get configs...">
             </action>
             <action id="config_remove"
                     class="com.bfr.pluginandroidstudio.action.ConfigAction"
-                    text="Revert configs to default...">
+                    text="Revert configs...">
             </action>
             <separator />
             <action id="devmode_on"

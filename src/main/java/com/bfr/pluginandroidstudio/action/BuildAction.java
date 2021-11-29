@@ -53,6 +53,8 @@ public class BuildAction extends AnAction {
         switch (iID) {
             case "core":
                 return "BuddyCore";
+            case "sdk":
+                return "BuddySDK";
             case "updater":
                 return iID;
             default:
