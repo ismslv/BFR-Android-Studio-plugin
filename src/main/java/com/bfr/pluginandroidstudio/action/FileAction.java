@@ -1,5 +1,7 @@
 package com.bfr.pluginandroidstudio.action;
 
+import com.bfr.pluginandroidstudio.Actions;
+import com.bfr.pluginandroidstudio.Common;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -17,10 +19,9 @@ public class FileAction  extends AnAction {
 
         String _id = ActionManager.getInstance().getId(this);
         String[] _ids = _id.split("_");
-        String _path = getPath(_project.getBasePath(), _ids[1]);
+        String _path = Common.APPS.get(_ids[1]).getLocalFilePath(_project.getBasePath());
         if (new File(_path).exists()) {
             try {
-                System.out.println("explorer.exe /select," + _path.replace("/", "\\"));
                 Runtime.getRuntime().exec("explorer.exe /select," + _path.replace("/", "\\"));
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -28,38 +29,13 @@ public class FileAction  extends AnAction {
         }
     }
 
-    String getPath(String iBasePath, String iID) {
-        String _path = iBasePath + "/";
-        String _name = "";
-        String _dir1 = "apk";
-        switch (iID) {
-            case "core":
-                _name = "BuddyCore";
-                break;
-            case "updater":
-                _name = "Updater";
-                break;
-            case "sdk":
-                _name = "BuddySDK";
-                _dir1 = "aar";
-                break;
-            default:
-                _name = "service" + iID;
-                break;
+    @Override
+    public void update(@NotNull AnActionEvent iEvent) {
+        if (iEvent.getProject() == null) {
+            iEvent.getPresentation().setEnabled(false);
+            return;
         }
-        _path += _name + "/build/outputs/" + _dir1 + "/";
 
-        if (_dir1.equals("apk")) {
-            File _f = new File(_path + "release/");
-            if (_f.exists())
-                return _path + "release/" + _name + "-release.apk";
-            else
-                return _path + "debug/" + _name + "-debug.apk";
-        } else {
-            if (new File(_path + _name + "-release.aar").exists())
-                return _path + _name + "-release.aar";
-            else
-                return _path + _name + "-debug.aar";
-        }
+        iEvent.getPresentation().setEnabled(iEvent.getProject().getName().equals("BuddyCore"));
     }
 }

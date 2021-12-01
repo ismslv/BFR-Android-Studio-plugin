@@ -13,7 +13,11 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import org.jetbrains.annotations.NotNull;
+import se.vidstige.jadb.ConnectionToRemoteDeviceException;
+import se.vidstige.jadb.JadbException;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
@@ -33,18 +37,9 @@ public class DeviceConnectAction extends AnAction {
             if (_robot != null && !_robot.isEmpty()) {
                 if (_id.equals("devices_connect")) {
                     String _IP = DeviceManager.getRobotIP(_robot);
-                    ArrayList<String> cmds = new ArrayList<>();
-                    cmds.add("adb");
-                    cmds.add("connect");
-                    cmds.add(_IP);
-                    GeneralCommandLine generalCommandLine = new GeneralCommandLine(cmds);
-                    generalCommandLine.setCharset(Charset.forName("UTF-8"));
-                    generalCommandLine.setWorkDirectory(_project.getBasePath());
-                    ProcessHandler processHandler = null;
                     try {
-                        processHandler = new OSProcessHandler(generalCommandLine);
-                        processHandler.startNotify();
-                    } catch (ExecutionException ex) {
+                        DeviceManager.ADB.connectToTcpDevice(new InetSocketAddress(_IP, 5555));
+                    } catch (IOException | JadbException | ConnectionToRemoteDeviceException ex) {
                         ex.printStackTrace();
                     }
                 } else if (_id.equals("device_forget")) {
@@ -61,10 +56,10 @@ public class DeviceConnectAction extends AnAction {
         String _id = ActionManager.getInstance().getId(this);
 
         if (_id.equals("device_remember")) {
-            Actions.setMenuEnabled(iEvent);
+            Actions.setMenuEnabledIfDevice(iEvent);
         } else if (_id.equals("devices_connect")) {
             if (DeviceManager.ROBOTS.size() > 0)
-                Actions.setMenuDisabled(iEvent);
+                iEvent.getPresentation().setEnabled(!DeviceManager.isDevice());
             else
                 iEvent.getPresentation().setEnabled(false);
         } else if (_id.equals("device_forget")) {

@@ -6,11 +6,7 @@
     <description><![CDATA[
         <h3>Android Studio special menu for Blue Frog Robotics robot Buddy.</h3>
         <ul>
-        <li><b>adb</b> and <b>scrcpy</b> should be in your PATH variable!</li>
-        <li>Download them here: <a href="https://github.com/Genymobile/scrcpy/releases/latest">https://github.com/Genymobile/scrcpy/releases/latest</a></li>
-        <li>How to add to PATH: <a href="https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/">https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/</a></li>
-        <li>To build, make sure you have JAVA_HOME with a path to Java in the PATH (System) too.</li>
-        <li>Normally path to Java will be like <i>C:\Users\username\AppData\Local\JetBrains\Toolbox\apps\AndroidStudio\ch-0\203.7784292\jre</i></li>
+        <li>To show screen, download <b>scrcpy</b>: <a href="https://github.com/Genymobile/scrcpy/releases/latest">https://github.com/Genymobile/scrcpy/releases/latest</a></li>
         </ul>
     ]]></description>
 

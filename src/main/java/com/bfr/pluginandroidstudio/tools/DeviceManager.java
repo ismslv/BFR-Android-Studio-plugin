@@ -12,9 +12,10 @@ public class DeviceManager {
 
     public static Preferences PREFS;
 
-    private static JadbConnection ADB;
+    public static JadbConnection ADB;
     public static String CURRENT_IP;
     public static List<String[]> ROBOTS;
+    public static JadbDevice CURRENT_DEVICE;
 
     private static Timer mTimer;
     private static boolean isInit = init();
@@ -30,15 +31,20 @@ public class DeviceManager {
             public void run() {
                 try {
                     CURRENT_IP = "";
+                    CURRENT_DEVICE = null;
                     List<JadbDevice> _devices = ADB.getDevices();
                     for (JadbDevice _d : _devices) {
                         if (_d.getState() == JadbDevice.State.Device) {
-                            CURRENT_IP = _d.getSerial();
+                            CURRENT_DEVICE = _d;
+                            String _serial = _d.getSerial();
+                            if (_serial.contains(":"))
+                                _serial = _serial.split(":")[0];
+                            CURRENT_IP = _serial;
                             break;
                         }
                     }
                 } catch (IOException | JadbException e) {
-                    //e.printStackTrace();
+                    CURRENT_DEVICE = null;
                     CURRENT_IP = "";
                 }
             }

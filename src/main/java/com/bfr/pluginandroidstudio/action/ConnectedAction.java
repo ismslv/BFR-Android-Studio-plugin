@@ -1,6 +1,8 @@
 package com.bfr.pluginandroidstudio.action;
 
+import com.bfr.pluginandroidstudio.Actions;
 import com.bfr.pluginandroidstudio.tools.DeviceManager;
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
