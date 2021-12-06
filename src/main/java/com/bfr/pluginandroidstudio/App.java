@@ -7,12 +7,14 @@ public class App {
     public String FullID;
     public String FileType;
     public String BuildConfig;
+    public String BuildRunConfig;
 
-    public App(String iID, String iFullID, String iFileType, String iBuildConfig) {
+    public App(String iID, String iFullID, String iFileType, String iBuildConfig, String iBuildRunConfig) {
         ID = iID;
         FullID = iFullID;
         FileType = iFileType;
         BuildConfig = iBuildConfig;
+        BuildRunConfig = iBuildRunConfig;
     }
 
     public String getLocalFilePath(String iBasePath) {

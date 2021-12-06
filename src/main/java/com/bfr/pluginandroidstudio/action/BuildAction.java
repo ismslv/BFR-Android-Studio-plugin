@@ -1,30 +1,17 @@
 package com.bfr.pluginandroidstudio.action;
 
-import com.bfr.pluginandroidstudio.Actions;
 import com.bfr.pluginandroidstudio.Common;
-import com.bfr.pluginandroidstudio.tools.DeviceManager;
+import com.bfr.pluginandroidstudio.ProjectManager;
 import com.intellij.execution.*;
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.execution.process.OSProcessHandler;
-import com.intellij.execution.process.ProcessEvent;
-import com.intellij.execution.process.ProcessHandler;
-import com.intellij.execution.process.ProcessListener;
 import com.intellij.execution.runners.ExecutionUtil;
 import com.intellij.ide.macro.MacroManager;
-import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
-import org.apache.tools.ant.taskdefs.Exec;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuildAction extends AnAction {
@@ -39,7 +26,7 @@ public class BuildAction extends AnAction {
         if (_ids[1].equals("all"))
             _confName = "BuildEverything";
         else
-            _confName = Common.APPS.get(_ids[1]).BuildConfig;
+            _confName = _ids[2].equals("build") ? Common.APPS.get(_ids[1]).BuildConfig : Common.APPS.get(_ids[1]).BuildRunConfig;
 
         runConf(_project, _confName, e);
     }
@@ -85,11 +72,11 @@ public class BuildAction extends AnAction {
 
     @Override
     public void update(@NotNull AnActionEvent iEvent) {
-        if (iEvent.getProject() == null) {
+        if (ProjectManager.getProject() == null) {
             iEvent.getPresentation().setEnabled(false);
             return;
         }
 
-        iEvent.getPresentation().setEnabled(iEvent.getProject().getName().equals("BuddyCore"));
+        iEvent.getPresentation().setEnabled(ProjectManager.isBuddyCore);
     }
 }

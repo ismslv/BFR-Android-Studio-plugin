@@ -1,8 +1,7 @@
 package com.bfr.pluginandroidstudio.action;
 
-import com.bfr.pluginandroidstudio.Actions;
-import com.bfr.pluginandroidstudio.tools.DeviceManager;
-import com.intellij.notification.NotificationType;
+import com.bfr.pluginandroidstudio.DeviceManager;
+import com.bfr.pluginandroidstudio.ProjectManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
@@ -16,6 +15,8 @@ public class ConnectedAction extends AnAction {
 
     @Override
     public void update(@NotNull AnActionEvent iEvent) {
+        ProjectManager.setProject(iEvent);
+
         boolean _isDevice = DeviceManager.isDevice();
         Presentation _presentation = iEvent.getPresentation();
         _presentation.setEnabled(false);

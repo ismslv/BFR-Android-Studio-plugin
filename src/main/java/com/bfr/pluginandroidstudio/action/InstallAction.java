@@ -1,35 +1,16 @@
 package com.bfr.pluginandroidstudio.action;
 
-import com.bfr.pluginandroidstudio.Actions;
-import com.bfr.pluginandroidstudio.App;
-import com.bfr.pluginandroidstudio.Common;
-import com.bfr.pluginandroidstudio.tools.DeviceManager;
-import com.intellij.execution.ExecutionException;
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.execution.process.OSProcessHandler;
-import com.intellij.execution.process.ProcessEvent;
-import com.intellij.execution.process.ProcessHandler;
-import com.intellij.execution.process.ProcessListener;
+import com.bfr.pluginandroidstudio.*;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
 import org.jetbrains.annotations.NotNull;
-import org.omg.CORBA.OMGVMCID;
 import se.vidstige.jadb.JadbException;
 import se.vidstige.jadb.RemoteFile;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class InstallAction extends AnAction {
 
@@ -63,11 +44,11 @@ public class InstallAction extends AnAction {
 
     @Override
     public void update(@NotNull AnActionEvent iEvent) {
-        if (iEvent.getProject() == null) {
+        if (ProjectManager.getProject() == null) {
             iEvent.getPresentation().setEnabled(false);
             return;
         }
-        iEvent.getPresentation().setEnabled(iEvent.getProject().getName().equals("BuddyCore") && DeviceManager.isDevice());
+        iEvent.getPresentation().setEnabled(ProjectManager.isBuddyCore && DeviceManager.isDevice());
     }
 
     String getCommand(String iType, App iApp) {

@@ -89,6 +89,9 @@
                 <separator />
                 <group id="group_apps_core" text="Core" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_core_buildrun"
+                            text="Build and run"/>
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_core_build"
                             text="Build"/>
                     <action class="com.bfr.pluginandroidstudio.action.FileAction"
@@ -109,6 +112,9 @@
                 </group>
                 <group id="group_apps_updater" text="Updater" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_updater_buildrun"
+                            text="Build and run"/>
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_updater_build"
                             text="Build"/>
                     <action class="com.bfr.pluginandroidstudio.action.FileAction"
@@ -127,6 +133,9 @@
                 <separator />
                 <group id="group_apps_usb" text="USB Service" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_usb_buildrun"
+                            text="Build and run"/>
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_usb_build"
                             text="Build"/>
                     <action class="com.bfr.pluginandroidstudio.action.FileAction"
@@ -144,6 +153,9 @@
                 </group>
                 <group id="group_apps_speech" text="Speech Service" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_speech_buildrun"
+                            text="Build and run"/>
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_speech_build"
                             text="Build"/>
                     <action class="com.bfr.pluginandroidstudio.action.FileAction"
@@ -160,6 +172,9 @@
                             text="Stop"/>
                 </group>
                 <group id="group_apps_vision" text="Vision Service" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_vision_buildrun"
+                            text="Build and run"/>
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_vision_build"
                             text="Build"/>
@@ -186,24 +201,44 @@
                         text="Show file"/>
             </group>
             <separator />
-            <action id="config_push"
-                    class="com.bfr.pluginandroidstudio.action.ConfigAction"
-                    text="Send configs...">
-            </action>
-            <action id="config_pull"
-                    class="com.bfr.pluginandroidstudio.action.ConfigAction"
-                    text="Get configs...">
-            </action>
-            <action id="config_remove"
-                    class="com.bfr.pluginandroidstudio.action.ConfigAction"
-                    text="Revert configs...">
+            <group id="group_config_system" text="System Configs" popup="true">
+                <action id="config_system_push"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Push...">
+                </action>
+                <action id="config_system_pull"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Save to...">
+                </action>
+                <action id="config_system_remove"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Revert">
+                </action>
+            </group>
+            <group id="group_config_user" text="User Configs" popup="true">
+                <action id="config_user_push"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Push...">
+                </action>
+                <action id="config_user_pull"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Save to...">
+                </action>
+                <action id="config_user_remove"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Revert">
+                </action>
+            </group>
+            <action id="logs_get"
+                    class="com.bfr.pluginandroidstudio.action.LogsAction"
+                    text="Get logs...">
             </action>
             <separator />
-            <action id="devmode_on"
+            <action id="config_system_devmodeon"
                     class="com.bfr.pluginandroidstudio.action.ConfigAction"
                     text="Switch to dev mode">
             </action>
-            <action id="devmode_off"
+            <action id="config_system_devmodeoff"
                     class="com.bfr.pluginandroidstudio.action.ConfigAction"
                     text="Switch to prod mode">
             </action>

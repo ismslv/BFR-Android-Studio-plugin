@@ -1,4 +1,4 @@
-package com.bfr.pluginandroidstudio.tools;
+package com.bfr.pluginandroidstudio;
 
 import se.vidstige.jadb.JadbConnection;
 import se.vidstige.jadb.JadbDevice;

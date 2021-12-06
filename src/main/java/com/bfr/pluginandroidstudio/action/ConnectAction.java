@@ -1,11 +1,6 @@
 package com.bfr.pluginandroidstudio.action;
 
-import com.bfr.pluginandroidstudio.Actions;
-import com.bfr.pluginandroidstudio.tools.DeviceManager;
-import com.intellij.execution.ExecutionException;
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.execution.process.OSProcessHandler;
-import com.intellij.execution.process.ProcessHandler;
+import com.bfr.pluginandroidstudio.DeviceManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -15,12 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import se.vidstige.jadb.ConnectionToRemoteDeviceException;
 import se.vidstige.jadb.JadbException;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 public class ConnectAction extends AnAction {
@@ -75,7 +66,6 @@ public class ConnectAction extends AnAction {
 
     @Override
     public void update(@NotNull AnActionEvent iEvent) {
-        boolean _isDevice = DeviceManager.isDevice();
-        iEvent.getPresentation().setText(_isDevice ? "Disconnect" : "Connect");
+        iEvent.getPresentation().setText(DeviceManager.isDevice() ? "Disconnect" : "Connect");
     }
 }

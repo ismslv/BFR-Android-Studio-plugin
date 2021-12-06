@@ -1,11 +1,7 @@
 package com.bfr.pluginandroidstudio.action;
 
 import com.bfr.pluginandroidstudio.Actions;
-import com.bfr.pluginandroidstudio.tools.DeviceManager;
-import com.intellij.execution.ExecutionException;
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.execution.process.OSProcessHandler;
-import com.intellij.execution.process.ProcessHandler;
+import com.bfr.pluginandroidstudio.DeviceManager;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -18,8 +14,6 @@ import se.vidstige.jadb.JadbException;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 
 public class DeviceConnectAction extends AnAction {
     @Override

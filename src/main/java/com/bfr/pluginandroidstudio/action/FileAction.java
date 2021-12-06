@@ -2,6 +2,7 @@ package com.bfr.pluginandroidstudio.action;
 
 import com.bfr.pluginandroidstudio.Actions;
 import com.bfr.pluginandroidstudio.Common;
+import com.bfr.pluginandroidstudio.ProjectManager;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -31,11 +32,11 @@ public class FileAction  extends AnAction {
 
     @Override
     public void update(@NotNull AnActionEvent iEvent) {
-        if (iEvent.getProject() == null) {
+        if (ProjectManager.getProject() == null) {
             iEvent.getPresentation().setEnabled(false);
             return;
         }
 
-        iEvent.getPresentation().setEnabled(iEvent.getProject().getName().equals("BuddyCore"));
+        iEvent.getPresentation().setEnabled(ProjectManager.isBuddyCore);
     }
 }
