@@ -201,7 +201,7 @@
                         text="Show file"/>
             </group>
             <separator />
-            <group id="group_config_system" text="System Configs" popup="true">
+            <group id="group_config_system" text="System Config" popup="true">
                 <action id="config_system_push"
                         class="com.bfr.pluginandroidstudio.action.ConfigAction"
                         text="Push...">
@@ -212,10 +212,10 @@
                 </action>
                 <action id="config_system_remove"
                         class="com.bfr.pluginandroidstudio.action.ConfigAction"
-                        text="Revert">
+                        text="Delete">
                 </action>
             </group>
-            <group id="group_config_user" text="User Configs" popup="true">
+            <group id="group_config_user" text="User Config" popup="true">
                 <action id="config_user_push"
                         class="com.bfr.pluginandroidstudio.action.ConfigAction"
                         text="Push...">
@@ -226,7 +226,21 @@
                 </action>
                 <action id="config_user_remove"
                         class="com.bfr.pluginandroidstudio.action.ConfigAction"
-                        text="Revert">
+                        text="Delete">
+                </action>
+            </group>
+            <group id="group_config_apps" text="Apps List" popup="true">
+                <action id="config_apps_push"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Push...">
+                </action>
+                <action id="config_apps_pull"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Save to...">
+                </action>
+                <action id="config_apps_remove"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Delete">
                 </action>
             </group>
             <action id="logs_get"

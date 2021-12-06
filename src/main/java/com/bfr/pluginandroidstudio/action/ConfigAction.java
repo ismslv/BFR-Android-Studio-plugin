@@ -64,7 +64,7 @@ public class ConfigAction extends AnAction {
                             new FileChooserDescriptor(true, false, false, false, false, false),
                             e.getProject(), null);
                     if (_virtualFilePush != null && _virtualFilePush.exists())
-                        if (_virtualFilePush.getFileType().getDefaultExtension().equals("xml")) {
+                        if (isFileGood(_idConfig, _virtualFilePush)) {
                             try {
                                 DeviceManager.CURRENT_DEVICE.push(
                                         new File(_virtualFilePush.getPath()),
@@ -105,7 +105,7 @@ public class ConfigAction extends AnAction {
     }
 
     String getConfigRemotePath(String iType) {
-        if (iType.equals("system")) {
+        if (iType.equals("system") || iType.equals("apps")) {
             return Common.CONFIG_SYSTEM_REMOTE + getConfigFileName(iType);
         } else if (iType.equals("user")) {
             return Common.CONFIG_USER_REMOTE.replace("[USERNAME]", "Default") + getConfigFileName(iType);
@@ -115,12 +115,20 @@ public class ConfigAction extends AnAction {
     }
 
     String getConfigFileName(String iType) {
-        if (iType.equals("system")) {
-            return "cfg_system.xml";
-        } else if (iType.equals("user")) {
-            return "cfg_user.xml";
+        switch (iType) {
+            case "system":
+                return "cfg_system.xml";
+            case "user":
+                return "cfg_user.xml";
+            case "apps":
+                return "applications.json";
         }
 
         return "";
+    }
+
+    boolean isFileGood(String iType, VirtualFile iFile) {
+        String _ext = iFile.getFileType().getDefaultExtension();
+        return (iType.equals("apps") && _ext.equals("json")) || _ext.equals("xml");
     }
 }
