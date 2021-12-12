@@ -17,4 +17,8 @@ public class Common {
     public static String CONFIG_PATH = "/sdcard/Configs/";
     public static String CONFIG_SYSTEM_REMOTE = CONFIG_PATH + "System/";
     public static String CONFIG_USER_REMOTE = CONFIG_PATH + "Users/[USERNAME]/";
+
+    public static String CONFIG_LOGS = "/sdcard/Logs/";
+    public static String CONFIG_LOGS_SYSTEM = CONFIG_LOGS + "System/";
+    public static String CONFIG_LOGS_CUSTOM = CONFIG_LOGS + "Custom/";
 }

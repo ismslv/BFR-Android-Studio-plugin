@@ -7,6 +7,8 @@ import com.intellij.execution.process.ProcessHandler;
 import com.intellij.notification.NotificationDisplayType;
 import com.intellij.notification.NotificationGroup;
 import com.intellij.notification.NotificationType;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
@@ -61,5 +63,9 @@ public class Actions {
             new InputStreamReader(iStream, StandardCharsets.UTF_8))
             .lines()
             .collect(Collectors.joining("\n"));
+    }
+
+    public static String[] getId(AnAction iAction) {
+        return ActionManager.getInstance().getId(iAction).split("_");
     }
 }

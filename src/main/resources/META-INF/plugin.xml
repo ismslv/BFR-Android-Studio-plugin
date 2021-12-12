@@ -243,10 +243,20 @@
                         text="Delete">
                 </action>
             </group>
-            <action id="logs_get"
-                    class="com.bfr.pluginandroidstudio.action.LogsAction"
-                    text="Get logs...">
-            </action>
+            <group id="group_logs" text="Logs" popup="true">
+                <action id="logs_get_update"
+                        class="com.bfr.pluginandroidstudio.action.LogsAction"
+                        text="Get update log">
+                </action>
+                <action id="logs_get_daily"
+                        class="com.bfr.pluginandroidstudio.action.LogsAction"
+                        text="Get daily log">
+                </action>
+                <action id="logs_get_all"
+                        class="com.bfr.pluginandroidstudio.action.LogsAction"
+                        text="Get all logs">
+                </action>
+            </group>
             <separator />
             <action id="config_system_devmodeon"
                     class="com.bfr.pluginandroidstudio.action.ConfigAction"

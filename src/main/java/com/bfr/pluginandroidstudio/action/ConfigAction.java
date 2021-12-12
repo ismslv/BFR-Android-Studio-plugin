@@ -105,9 +105,9 @@ public class ConfigAction extends AnAction {
     }
 
     String getConfigRemotePath(String iType) {
-        if (iType.equals("system") || iType.equals("apps")) {
+        if (iType.equals("system")) {
             return Common.CONFIG_SYSTEM_REMOTE + getConfigFileName(iType);
-        } else if (iType.equals("user")) {
+        } else if (iType.equals("user") || iType.equals("apps")) {
             return Common.CONFIG_USER_REMOTE.replace("[USERNAME]", "Default") + getConfigFileName(iType);
         }
 

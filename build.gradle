@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.bfr'
-version '0.9.84'
+version '0.9.85'
 
 sourceCompatibility = 1.8
 
