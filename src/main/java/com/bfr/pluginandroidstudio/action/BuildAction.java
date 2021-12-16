@@ -72,11 +72,6 @@ public class BuildAction extends AnAction {
 
     @Override
     public void update(@NotNull AnActionEvent iEvent) {
-        if (ProjectManager.getProject() == null) {
-            iEvent.getPresentation().setEnabled(false);
-            return;
-        }
-
         iEvent.getPresentation().setEnabled(ProjectManager.isBuddyCore);
     }
 }

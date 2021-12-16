@@ -15,7 +15,10 @@ public class ProjectManager {
         if (mProject == iEvent.getProject()) return;
 
         mProject = iEvent.getProject();
-        isBuddyCore = mProject.getName().equals("BuddyCore");
+        if (mProject != null)
+            isBuddyCore = mProject.getName().equals("BuddyCore");
+        else
+            isBuddyCore = false;
     }
 
 

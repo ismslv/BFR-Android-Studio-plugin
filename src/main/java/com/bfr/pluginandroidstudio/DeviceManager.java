@@ -1,5 +1,6 @@
 package com.bfr.pluginandroidstudio;
 
+import com.intellij.notification.NotificationType;
 import se.vidstige.jadb.JadbConnection;
 import se.vidstige.jadb.JadbDevice;
 import se.vidstige.jadb.JadbException;
@@ -15,6 +16,7 @@ public class DeviceManager {
     public static JadbConnection ADB;
     public static String CURRENT_IP;
     public static List<String[]> ROBOTS;
+    public static List<String> CONNECTED_DEVICES;
     public static JadbDevice CURRENT_DEVICE;
 
     private static Timer mTimer;
@@ -33,17 +35,20 @@ public class DeviceManager {
                     CURRENT_IP = "";
                     CURRENT_DEVICE = null;
                     List<JadbDevice> _devices = ADB.getDevices();
+                    CONNECTED_DEVICES = new ArrayList<>();
                     for (JadbDevice _d : _devices) {
                         if (_d.getState() == JadbDevice.State.Device) {
                             CURRENT_DEVICE = _d;
                             String _serial = _d.getSerial();
                             if (_serial.contains(":"))
                                 _serial = _serial.split(":")[0];
+                            CONNECTED_DEVICES.add(_serial);
                             CURRENT_IP = _serial;
                             break;
                         }
                     }
                 } catch (IOException | JadbException e) {
+                    e.printStackTrace();
                     CURRENT_DEVICE = null;
                     CURRENT_IP = "";
                 }

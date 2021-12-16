@@ -8,13 +8,15 @@ public class App {
     public String FileType;
     public String BuildConfig;
     public String BuildRunConfig;
+    public String LaunchPackage;
 
-    public App(String iID, String iFullID, String iFileType, String iBuildConfig, String iBuildRunConfig) {
+    public App(String iID, String iFullID, String iFileType, String iBuildConfig, String iBuildRunConfig, String iLaunchPackage) {
         ID = iID;
         FullID = iFullID;
         FileType = iFileType;
         BuildConfig = iBuildConfig;
         BuildRunConfig = iBuildRunConfig;
+        LaunchPackage = iLaunchPackage;
     }
 
     public String getLocalFilePath(String iBasePath) {

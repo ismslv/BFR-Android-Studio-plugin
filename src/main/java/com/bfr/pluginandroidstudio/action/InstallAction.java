@@ -5,7 +5,10 @@ import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.fileChooser.FileChooser;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import se.vidstige.jadb.JadbException;
 import se.vidstige.jadb.RemoteFile;
@@ -15,40 +18,35 @@ import java.io.*;
 public class InstallAction extends AnAction {
 
     Project mProject;
+    String[] ids;
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        String _id = ActionManager.getInstance().getId(this);
-        String[] _ids = _id.split("_");
         mProject = e.getProject();
 
-        if (_ids[2].equals("install")) {
+        if (ids[2].equals("install")) {
             try {
-                DeviceManager.CURRENT_DEVICE.executeShell("mkdir -p /sdcard/Updates/Firmware");
-                DeviceManager.CURRENT_DEVICE.executeShell("mkdir -p /sdcard/Updates/Software");
-                DeviceManager.CURRENT_DEVICE.executeShell("mkdir -p /sdcard/Updates/Local");
+                DeviceManager.CURRENT_DEVICE.executeShell("mkdir -p /sdcard/tmp");
             } catch (IOException | JadbException ex) {
                 ex.printStackTrace();
             }
         }
 
-        if (!_ids[1].equals("all")) {
-            performTask(_ids[2], Common.APPS.get(_ids[1]));
+        if (!ids[1].equals("all")) {
+            performTask(ids[2], Common.APPS.get(ids[1]));
         } else {
             Common.APPS.forEach((s, app) -> {
                 if (app.FileType.equals("apk"))
-                    performTask(_ids[2], app);
+                    performTask(ids[2], app);
             });
         }
     }
 
     @Override
     public void update(@NotNull AnActionEvent iEvent) {
-        if (ProjectManager.getProject() == null) {
-            iEvent.getPresentation().setEnabled(false);
-            return;
-        }
-        iEvent.getPresentation().setEnabled(ProjectManager.isBuddyCore && DeviceManager.isDevice());
+        if (ids == null)
+            ids = Actions.getId(this);
+        iEvent.getPresentation().setEnabled(DeviceManager.isDevice());
     }
 
     String getCommand(String iType, App iApp) {
@@ -65,14 +63,14 @@ public class InstallAction extends AnAction {
                 oCmd += "pm install -t ";
                 break;
             case "launch":
-                oCmd += "am start -n com.bfr.buddy.core/com.bfr.buddy.core.LauncherActivity";
+                oCmd += "am start -n " + iApp.LaunchPackage;
                 break;
         }
 
         if (iType.equals("stop") || iType.equals("uninstall"))
             oCmd += "com.bfr.buddy." + iApp.ID;
         else if (iType.equals("install"))
-            oCmd += "sdcard/Updates/Local/" + iApp.FullID + ".apk";
+            oCmd += "sdcard/tmp/" + iApp.FullID + ".apk";
 
         return oCmd;
     }
@@ -80,22 +78,41 @@ public class InstallAction extends AnAction {
     void pushFile(App iApp) throws IOException, JadbException {
         DeviceManager.CURRENT_DEVICE.push(
             new File(iApp.getLocalFilePath(mProject.getBasePath())),
-            new RemoteFile("sdcard/Updates/Local/" + iApp.FullID + ".apk")
+            new RemoteFile("sdcard/tmp/" + iApp.FullID + ".apk")
+        );
+    }
+
+    void pushFile(String iFilePath, App iApp) throws IOException, JadbException {
+        DeviceManager.CURRENT_DEVICE.push(
+                new File(iFilePath),
+                new RemoteFile("sdcard/Updates/Local/" + iApp.FullID + ".apk")
         );
     }
 
     void performTask(String iType, App iApp) {
         try {
-            if (iType.equals("install")) {
-                if (new File(iApp.getLocalFilePath(mProject.getBasePath())).exists())
-                    pushFile(iApp);
-                else {
-                    Actions.showNotification(mProject, "No apk. Build " + iApp.FullID + " before installing.", NotificationType.INFORMATION);
-                    return;
-                }
+            if (iType.equals("relaunch")) {
+                DeviceManager.CURRENT_DEVICE.executeShell(getCommand("stop", iApp));
+                iType = "launch";
             }
             String _cmd = getCommand(iType, iApp);
-            DeviceManager.CURRENT_DEVICE.executeShell(_cmd);
+            if (iType.equals("install")) {
+                if (new File(iApp.getLocalFilePath(mProject.getBasePath())).exists()) {
+                    pushFile(iApp);
+                    DeviceManager.CURRENT_DEVICE.executeShell(_cmd);
+                } else {
+                    VirtualFile virtualFile = FileChooser.chooseFile(new FileChooserDescriptor(
+                            true, false, false, false, false, false
+                    ), null, null);
+                    if (virtualFile != null && virtualFile.exists() && virtualFile.getPath().endsWith(".apk")) {
+                        pushFile(virtualFile.getPath(), iApp);
+                        DeviceManager.CURRENT_DEVICE.executeShell(_cmd);
+                    } else
+                        return;
+                }
+            } else {
+                DeviceManager.CURRENT_DEVICE.executeShell(_cmd);
+            }
         } catch (IOException | JadbException e) {
             e.printStackTrace();
         }

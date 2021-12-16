@@ -76,6 +76,9 @@ public class DeviceAction extends AnAction {
                 return "am start -a android.settings.APPLICATION_SETTINGS";
             case "device_wifi":
                 return "am start -a android.settings.WIFI_SETTINGS";
+            case "device_filemanager":
+                return "am start -n com.cyanogenmod.filemanager/.activities.NavigationActivity";
+                //am start -a android.intent.action.OPEN_DOCUMENT -d /sdcard -t '*/*'
         }
 
         return "";

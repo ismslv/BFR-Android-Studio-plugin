@@ -25,6 +25,10 @@
                     class="com.bfr.pluginandroidstudio.action.ConnectedAction"
                     text="No device">
             </action>
+<!--            <action id="device_switch"-->
+<!--                    class="com.bfr.pluginandroidstudio.action.DeviceSwitchAction"-->
+<!--                    text="Multiple devices. Switch...">-->
+<!--            </action>-->
             <action id="device_connect"
                     class="com.bfr.pluginandroidstudio.action.ConnectAction"
                     text="Connect">
@@ -60,6 +64,10 @@
                 <action id="device_wifi"
                         class="com.bfr.pluginandroidstudio.action.DeviceAction"
                         text="Open WiFi settings">
+                </action>
+                <action id="device_filemanager"
+                        class="com.bfr.pluginandroidstudio.action.DeviceAction"
+                        text="Open File manager">
                 </action>
             </group>
             <!--                <action id="device_reboot"-->
@@ -109,6 +117,9 @@
                     <action class="com.bfr.pluginandroidstudio.action.InstallAction"
                             id="app_core_launch"
                             text="Launch"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_core_relaunch"
+                            text="Relaunch"/>
                 </group>
                 <group id="group_apps_updater" text="Updater" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
@@ -129,6 +140,9 @@
                     <action class="com.bfr.pluginandroidstudio.action.InstallAction"
                             id="app_updater_stop"
                             text="Stop"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_updater_launch"
+                            text="Launch"/>
                 </group>
                 <separator />
                 <group id="group_apps_usb" text="USB Service" popup="true">
@@ -257,6 +271,11 @@
                         text="Get all logs">
                 </action>
             </group>
+            <separator />
+            <action id="customapp_install"
+                    class="com.bfr.pluginandroidstudio.action.CustomAppAction"
+                    text="Install local app">
+            </action>
             <separator />
             <action id="config_system_devmodeon"
                     class="com.bfr.pluginandroidstudio.action.ConfigAction"

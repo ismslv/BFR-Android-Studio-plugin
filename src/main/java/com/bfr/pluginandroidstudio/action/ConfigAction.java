@@ -26,10 +26,10 @@ public class ConfigAction extends AnAction {
     private static final String CONFIG_USER_DEF = "Default user";
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        Project _project = e.getRequiredData(CommonDataKeys.PROJECT);
-        String[] _ids = ActionManager.getInstance().getId(this).split("_");
-        String _idConfig = _ids[1];
-        String _idAction = _ids[2];
+        Project project = e.getRequiredData(CommonDataKeys.PROJECT);
+        String[] ids = ActionManager.getInstance().getId(this).split("_");
+        String idConfig = ids[1];
+        String idAction = ids[2];
 
         try {
             DeviceManager.CURRENT_DEVICE.executeShell("mkdir -p " + Common.CONFIG_SYSTEM_REMOTE);
@@ -38,20 +38,22 @@ public class ConfigAction extends AnAction {
             ex.printStackTrace();
         }
 
-        if (_idAction.equals("push") || _idAction.equals("pull") || _idAction.equals("remove")) {
-            // Configs
-            String _remoteFilePath = getConfigRemotePath(_idConfig);
+        String checkExtension = ids[1].equals("apps") ? ".json" : ".xml";
 
-            switch (_idAction) {
+        if (idAction.equals("push") || idAction.equals("pull") || idAction.equals("remove")) {
+            // Configs
+            String _remoteFilePath = getConfigRemotePath(idConfig);
+
+            switch (idAction) {
                 case "pull":
-                    VirtualFile _virtualFilePull = FileChooser.chooseFile(
+                    VirtualFile virtualFilePull = FileChooser.chooseFile(
                             new FileChooserDescriptor(false, true, false, false, false, false),
                             e.getProject(), null);
-                    if (_virtualFilePull != null && _virtualFilePull.exists()) {
+                    if (virtualFilePull != null && virtualFilePull.exists()) {
                         try {
                             DeviceManager.CURRENT_DEVICE.pull(
                                     new RemoteFile(_remoteFilePath),
-                                    new File(_virtualFilePull.getPath() + "/" + getConfigFileName(_idConfig))
+                                    new File(virtualFilePull.getPath() + "/" + getConfigFileName(idConfig))
                             );
                         } catch (IOException | JadbException ex) {
                             ex.printStackTrace();
@@ -60,14 +62,14 @@ public class ConfigAction extends AnAction {
                         return;
                     break;
                 case "push":
-                    VirtualFile _virtualFilePush = FileChooser.chooseFile(
+                    VirtualFile virtualFilePush = FileChooser.chooseFile(
                             new FileChooserDescriptor(true, false, false, false, false, false),
                             e.getProject(), null);
-                    if (_virtualFilePush != null && _virtualFilePush.exists())
-                        if (isFileGood(_idConfig, _virtualFilePush)) {
+                    if (virtualFilePush != null && virtualFilePush.exists() && virtualFilePush.getPath().endsWith(checkExtension))
+                        if (isFileGood(idConfig, virtualFilePush)) {
                             try {
                                 DeviceManager.CURRENT_DEVICE.push(
-                                        new File(_virtualFilePush.getPath()),
+                                        new File(virtualFilePush.getPath()),
                                         new RemoteFile(_remoteFilePath)
                                 );
                             } catch (IOException | JadbException ex) {
@@ -84,13 +86,13 @@ public class ConfigAction extends AnAction {
                     }
                     break;
             }
-        } else if (_idAction.equals("devmodeon")) {
+        } else if (idAction.equals("devmodeon")) {
             try {
                 DeviceManager.CURRENT_DEVICE.executeShell("dpm remove-active-admin com.bfr.buddy.core/.AdminReceiver");
             } catch (IOException | JadbException ex) {
                 ex.printStackTrace();
             }
-        } else if (_idAction.equals("devmodeoff")) {
+        } else if (idAction.equals("devmodeoff")) {
             try {
                 DeviceManager.CURRENT_DEVICE.executeShell("dpm set-device-owner com.bfr.buddy.core/.AdminReceiver");
             } catch (IOException | JadbException ex) {
