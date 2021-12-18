@@ -29,6 +29,10 @@ public class Actions {
         _group.createNotification("BFR action", iText, iType, null).notify(iProject);
     }
 
+    public static void showError(String iMessage) {
+        Messages.showErrorDialog(iMessage, "Error");
+    }
+
     public static void askQuestion(Project iProject, String iTitle, String iMessage, String[] iOptions, Consumer<Integer> iCallback) {
         int _answer = Messages.showDialog(iProject, iMessage, iTitle, iOptions, 0, null);
         if (iCallback != null)

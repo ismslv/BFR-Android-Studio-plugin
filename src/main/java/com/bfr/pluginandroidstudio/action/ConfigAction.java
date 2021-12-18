@@ -3,6 +3,8 @@ package com.bfr.pluginandroidstudio.action;
 import com.bfr.pluginandroidstudio.Actions;
 import com.bfr.pluginandroidstudio.Common;
 import com.bfr.pluginandroidstudio.DeviceManager;
+import com.bfr.pluginandroidstudio.ProjectManager;
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -65,7 +67,7 @@ public class ConfigAction extends AnAction {
                     VirtualFile virtualFilePush = FileChooser.chooseFile(
                             new FileChooserDescriptor(true, false, false, false, false, false),
                             e.getProject(), null);
-                    if (virtualFilePush != null && virtualFilePush.exists() && virtualFilePush.getPath().endsWith(checkExtension))
+                    if (virtualFilePush != null && virtualFilePush.exists())
                         if (isFileGood(idConfig, virtualFilePush)) {
                             try {
                                 DeviceManager.CURRENT_DEVICE.push(
@@ -75,8 +77,10 @@ public class ConfigAction extends AnAction {
                             } catch (IOException | JadbException ex) {
                                 ex.printStackTrace();
                             }
-                        } else
+                        } else {
+                            Actions.showError("Bad file");
                             return;
+                        }
                     break;
                 case "remove":
                     try {
@@ -88,13 +92,16 @@ public class ConfigAction extends AnAction {
             }
         } else if (idAction.equals("devmodeon")) {
             try {
-                DeviceManager.CURRENT_DEVICE.executeShell("dpm remove-active-admin com.bfr.buddy.core/.AdminReceiver");
+                DeviceManager.CURRENT_DEVICE.executeShell("su 0 rm -f /data/system/device_owner_2.xml");
+                DeviceManager.CURRENT_DEVICE.executeShell("su 0 rm -f /data/system/device_policies.xml");
+                DeviceManager.CURRENT_DEVICE.executeShell("reboot");
             } catch (IOException | JadbException ex) {
                 ex.printStackTrace();
             }
         } else if (idAction.equals("devmodeoff")) {
             try {
                 DeviceManager.CURRENT_DEVICE.executeShell("dpm set-device-owner com.bfr.buddy.core/.AdminReceiver");
+                DeviceManager.CURRENT_DEVICE.executeShell("reboot");
             } catch (IOException | JadbException ex) {
                 ex.printStackTrace();
             }
@@ -131,6 +138,19 @@ public class ConfigAction extends AnAction {
 
     boolean isFileGood(String iType, VirtualFile iFile) {
         String _ext = iFile.getFileType().getDefaultExtension();
-        return (iType.equals("apps") && _ext.equals("json")) || _ext.equals("xml");
+        boolean isExtensionGood = (iType.equals("apps") && _ext.equals("json")) || _ext.equals("xml");
+        boolean isNameGood = false;
+        switch (iType) {
+            case "system":
+                isNameGood = iFile.getNameWithoutExtension().contains("system");
+                break;
+            case "user":
+                isNameGood = iFile.getNameWithoutExtension().contains("user");
+                break;
+            case "apps":
+                isNameGood = iFile.getNameWithoutExtension().contains("applications");
+                break;
+        }
+        return isExtensionGood && isNameGood;
     }
 }

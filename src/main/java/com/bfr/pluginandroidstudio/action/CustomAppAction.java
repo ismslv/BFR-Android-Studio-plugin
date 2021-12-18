@@ -1,9 +1,7 @@
 package com.bfr.pluginandroidstudio.action;
 
-import com.bfr.pluginandroidstudio.Actions;
-import com.bfr.pluginandroidstudio.App;
-import com.bfr.pluginandroidstudio.Common;
-import com.bfr.pluginandroidstudio.DeviceManager;
+import com.bfr.pluginandroidstudio.*;
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.fileChooser.FileChooser;
@@ -38,6 +36,8 @@ public class CustomAppAction extends AnAction {
                 } catch (IOException | JadbException e) {
                     e.printStackTrace();
                 }
+            } else {
+                Actions.showError("Bad file");
             }
         }
     }
