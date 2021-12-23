@@ -84,6 +84,9 @@
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_all_build"
                             text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.FileAction"
+                            id="app_all_collect"
+                            text="Collect apks to folder..."/>
                     <action class="com.bfr.pluginandroidstudio.action.InstallAction"
                             id="app_all_install"
                             text="Install"/>
