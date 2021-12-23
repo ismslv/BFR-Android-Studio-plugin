@@ -19,10 +19,12 @@ public class App {
         LaunchPackage = iLaunchPackage;
     }
 
-    public String getLocalFilePath(String iBasePath) {
-        String oPath = iBasePath + "/";
+    public String getOutputDir() {
+        return ProjectManager.getProject().getBasePath() + "/" + FullID + "/build/outputs/" + FileType + "/";
+    }
 
-        oPath += FullID + "/build/outputs/" + FileType + "/";
+    public String getLocalFilePath() {
+        String oPath = ProjectManager.getProject().getBasePath() + "/" + FullID + "/build/outputs/" + FileType + "/";
 
         if (FileType.equals("apk")) {
             File _f = new File(oPath + "release/" + FullID + "-release.apk");

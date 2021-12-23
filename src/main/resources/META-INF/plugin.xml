@@ -103,6 +103,9 @@
                             id="app_core_buildrun"
                             text="Build and run"/>
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_core_buildinstall"
+                            text="Build and install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_core_build"
                             text="Build"/>
                     <action class="com.bfr.pluginandroidstudio.action.FileAction"
@@ -126,8 +129,8 @@
                 </group>
                 <group id="group_apps_updater" text="Updater" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
-                            id="app_updater_buildrun"
-                            text="Build and run"/>
+                            id="app_updater_buildinstall"
+                            text="Build and install"/>
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_updater_build"
                             text="Build"/>
@@ -150,8 +153,8 @@
                 <separator />
                 <group id="group_apps_usb" text="USB Service" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
-                            id="app_usb_buildrun"
-                            text="Build and run"/>
+                            id="app_usb_buildinstall"
+                            text="Build and install"/>
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_usb_build"
                             text="Build"/>
@@ -170,8 +173,8 @@
                 </group>
                 <group id="group_apps_speech" text="Speech Service" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
-                            id="app_speech_buildrun"
-                            text="Build and run"/>
+                            id="app_speech_buildinstall"
+                            text="Build and install"/>
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_speech_build"
                             text="Build"/>
@@ -190,8 +193,8 @@
                 </group>
                 <group id="group_apps_vision" text="Vision Service" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
-                            id="app_vision_buildrun"
-                            text="Build and run"/>
+                            id="app_vision_buildinstall"
+                            text="Build and install"/>
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_vision_build"
                             text="Build"/>

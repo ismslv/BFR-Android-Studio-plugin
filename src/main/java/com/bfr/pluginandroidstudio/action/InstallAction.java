@@ -77,7 +77,7 @@ public class InstallAction extends AnAction {
 
     void pushFile(App iApp) throws IOException, JadbException {
         DeviceManager.CURRENT_DEVICE.push(
-            new File(iApp.getLocalFilePath(mProject.getBasePath())),
+            new File(iApp.getLocalFilePath()),
             new RemoteFile("sdcard/tmp/" + iApp.FullID + ".apk")
         );
     }
@@ -97,7 +97,7 @@ public class InstallAction extends AnAction {
             }
             String _cmd = getCommand(iType, iApp);
             if (iType.equals("install")) {
-                if (new File(iApp.getLocalFilePath(mProject.getBasePath())).exists()) {
+                if (new File(iApp.getLocalFilePath()).exists()) {
                     pushFile(iApp);
                     DeviceManager.CURRENT_DEVICE.executeShell(_cmd);
                 } else {

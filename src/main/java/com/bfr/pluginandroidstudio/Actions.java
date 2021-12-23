@@ -1,24 +1,30 @@
 package com.bfr.pluginandroidstudio;
 
-import com.intellij.execution.ExecutionException;
+import com.intellij.execution.*;
 import com.intellij.execution.configurations.GeneralCommandLine;
+import com.intellij.execution.configurations.RunProfileState;
+import com.intellij.execution.impl.ExecutionManagerImpl;
 import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.execution.process.ProcessHandler;
+import com.intellij.execution.runners.ExecutionEnvironment;
+import com.intellij.execution.runners.ExecutionUtil;
+import com.intellij.execution.runners.ProgramRunner;
+import com.intellij.execution.ui.RunContentDescriptor;
+import com.intellij.ide.macro.MacroManager;
 import com.intellij.notification.NotificationDisplayType;
 import com.intellij.notification.NotificationGroup;
 import com.intellij.notification.NotificationType;
-import com.intellij.openapi.actionSystem.ActionManager;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.Disposable;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.util.Disposer;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -71,5 +77,114 @@ public class Actions {
 
     public static String[] getId(AnAction iAction) {
         return ActionManager.getInstance().getId(iAction).split("_");
+    }
+
+    public static void showFileInExplorer(String iPath, boolean iIsFolder) {
+        String command = "explorer.exe "
+                      + (iIsFolder ? "" : "/")
+                      + "select,\""
+                      + iPath.replace("/", "\\")
+                      + "\"";
+        try {
+            Runtime.getRuntime().exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void copyFile(String iPathFrom, String iPathTo) {
+        String command = "xcopy "
+                      + "\""
+                      + iPathFrom.replace("/", "\\")
+                      + "\" \""
+                      + iPathTo.replace("/", "\\")
+                      + "\"";
+        try {
+            Runtime.getRuntime().exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void removeDir(String iPath) {
+        try {
+            Runtime.getRuntime().exec("cmd /c rmdir /S /Q \"" + iPath.replace("/", "\\") + "\"");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getBuildConfig(String iApp, String iAct) {
+        String oConfName;
+        if (iApp.equals("all"))
+            oConfName = "BuildEverything";
+        else {
+            switch (iAct) {
+                case "buildrun":
+                    oConfName = Common.APPS.get(iApp).BuildRunConfig;
+                    break;
+                case "build":
+                default:
+                    oConfName = Common.APPS.get(iApp).BuildConfig;
+                    break;
+            }
+        }
+        return oConfName;
+    }
+
+    public static void runConf(String iName, AnActionEvent iEvent, Runnable iAction) {
+        RunManagerEx runManager = RunManagerEx.getInstanceEx(ProjectManager.getProject());
+        RunnerAndConfigurationSettings runConfig = runManager.findConfigurationByName(iName);
+
+        if (runConfig == null) {
+            System.out.println("Unable to find Run configuration with name: " + iName);
+            return;
+        }
+
+        Executor executor = Executor.EXECUTOR_EXTENSION_NAME.getExtensionList().get(0);
+        if (executor == null) {
+            System.out.println("Unable to find Executor");
+            return;
+        }
+        //String executorId = executor.getId();
+        //String executionTargetId = ExecutionTargetManager.getInstance(iProject).getActiveTarget().getId();
+
+        ExecutionTarget target = getExecutionTarget(ProjectManager.getProject(), runConfig, null);
+        MacroManager.getInstance().cacheMacrosPreview(iEvent.getDataContext());
+        ExecutionUtil.doRunConfiguration(runConfig, executor, target, null, iEvent.getDataContext());
+
+        if (iAction != null) {
+            Disposable disposable = Disposer.newDisposable();
+            iEvent.getProject().getMessageBus().connect(disposable).subscribe(ExecutionManager.EXECUTION_TOPIC, new ExecutionListener() {
+                @Override
+                public void processStarted(@NotNull String executorId, @NotNull ExecutionEnvironment env, @NotNull ProcessHandler handler) {
+
+                }
+
+                @Override
+                public void processTerminated(@NotNull String executorId, @NotNull ExecutionEnvironment env, @NotNull ProcessHandler handler, int exitCode) {
+                    if (env.getExecutionTarget().getDisplayName().equals(target.getDisplayName()))
+                        iAction.run();
+                    Disposer.dispose(disposable);
+                }
+            });
+        }
+    }
+
+    @NotNull
+    private static ExecutionTarget getExecutionTarget(@NotNull Project project, @NotNull RunnerAndConfigurationSettings runConfig, String iTargetId) {
+        ExecutionTargetManager targetManager = ExecutionTargetManager.getInstance(project);
+        ExecutionTarget active = targetManager.getActiveTarget();
+        if (iTargetId == null || iTargetId.equals(active.getId())) {
+            return active;
+        }
+
+        List<ExecutionTarget> targets = targetManager.getTargetsFor(runConfig.getConfiguration());
+        for (ExecutionTarget target : targets) {
+            if (target.getId().equals(iTargetId)) {
+                return target;
+            }
+        }
+        return active;
     }
 }
