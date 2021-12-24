@@ -32,7 +32,7 @@ public class CustomAppAction extends AnAction {
             if (virtualFile != null && virtualFile.exists() && virtualFile.getPath().endsWith(".apk")) {
                 try {
                     pushFile(virtualFile);
-                    DeviceManager.CURRENT_DEVICE.executeShell("am start -n " + Common.APPS.get("updater").LaunchPackage);
+                    DeviceManager.CURRENT_DEVICE.executeShell("am start -n " + Common.APPS.get("updater").LaunchPackage + " --es \"start_type\" \"install_custom\"");
                 } catch (IOException | JadbException e) {
                     e.printStackTrace();
                 }
