@@ -1,6 +1,11 @@
 package com.bfr.pluginandroidstudio;
 
+import org.apache.commons.io.filefilter.WildcardFileFilter;
+
 import java.io.File;
+import java.io.FileFilter;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class App {
     public String ID;
@@ -24,28 +29,32 @@ public class App {
     }
 
     public String getLocalFilePath() {
-        String oPath = ProjectManager.getProject().getBasePath() + "/" + FullID + "/build/outputs/" + FileType + "/";
+        String oPath = getOutputDir();
+        FileFilter filter = new WildcardFileFilter(FullID + "_*." + FileType);
 
-        if (FileType.equals("apk")) {
-            File _f = new File(oPath + "release/" + FullID + "-release.apk");
-            if (_f.exists())
-                return _f.getAbsolutePath();
+        File fileRelease = getLastFileFromDir(oPath + "release/", filter);
+        if (fileRelease != null)
+            return fileRelease.getAbsolutePath();
 
-            _f = new File(oPath + "debug/" + FullID + "-debug.apk");
-            if (_f.exists())
-                return _f.getAbsolutePath();
+        File fileDebug = getLastFileFromDir(oPath + "debug/", filter);
+        if (fileDebug != null)
+            return fileDebug.getAbsolutePath();
 
-            return "";
-        } else {
-            File _f = new File(oPath + FullID + "-release.aar");
-            if (_f.exists())
-                return _f.getAbsolutePath();
+        return "";
+    }
 
-            _f = new File(oPath + FullID + "-debug.aar");
-            if (_f.exists())
-                return _f.getAbsolutePath();
+    private File getLastFileFromDir(String iDirName, FileFilter iFilter) {
+        File dir = new File(iDirName);
 
-            return "";
+        if (!dir.exists() || !dir.isDirectory())
+            return null;
+
+        File[] files = dir.listFiles(iFilter);
+        if (files != null && files.length > 0) {
+            Arrays.sort(files, Comparator.comparingLong(File::lastModified));
+            return files[files.length - 1];
         }
+
+        return null;
     }
 }

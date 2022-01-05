@@ -150,6 +150,29 @@
                             id="app_updater_launch"
                             text="Launch"/>
                 </group>
+                <group id="group_apps_launcher" text="Launcher" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_launcher_buildinstall"
+                            text="Build and install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_launcher_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.FileAction"
+                            id="app_launcher_showfile"
+                            text="Show file"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_launcher_install"
+                            text="Install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_launcher_uninstall"
+                            text="Uninstall"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_launcher_stop"
+                            text="Stop"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_launcher_launch"
+                            text="Launch"/>
+                </group>
                 <separator />
                 <group id="group_apps_usb" text="USB Service" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"

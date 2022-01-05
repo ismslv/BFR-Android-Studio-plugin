@@ -23,20 +23,17 @@ public class BuildAction extends AnAction {
             Actions.removeDir(app.getOutputDir() + "release");
             Actions.removeDir(app.getOutputDir() + "debug");
             String confName = Actions.getBuildConfig(ids[1], ids[2]);
-            Actions.runConf(confName, e, new Runnable() {
-                @Override
-                public void run() {
-                    String localFilePath = app.getLocalFilePath();
-                    if (!localFilePath.isEmpty()) {
-                        try {
-                            DeviceManager.CURRENT_DEVICE.push(
-                                    new File(localFilePath),
-                                    new RemoteFile("sdcard/tmp/" + app.FullID + ".apk")
-                            );
-                            DeviceManager.CURRENT_DEVICE.executeShell("pm install -t sdcard/tmp/" + app.FullID + ".apk");
-                        } catch (IOException | JadbException ex) {
-                            ex.printStackTrace();
-                        }
+            Actions.runConf(confName, e, () -> {
+                String localFilePath = app.getLocalFilePath();
+                if (!localFilePath.isEmpty()) {
+                    try {
+                        DeviceManager.CURRENT_DEVICE.push(
+                                new File(localFilePath),
+                                new RemoteFile("sdcard/tmp/" + app.FullID + ".apk")
+                        );
+                        DeviceManager.CURRENT_DEVICE.executeShell("pm install -t sdcard/tmp/" + app.FullID + ".apk");
+                    } catch (IOException | JadbException ex) {
+                        ex.printStackTrace();
                     }
                 }
             });
