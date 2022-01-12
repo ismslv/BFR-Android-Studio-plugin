@@ -10,7 +10,6 @@ public class Common {
         put("speech", new App("speech", "ServiceSpeech", "apk", "BuildSpeech", "ServiceSpeech", ""));
         put("vision", new App("vision", "ServiceVision", "apk", "BuildVision", "ServiceVision", ""));
         put("updater", new App("updater", "Updater", "apk", "BuildUpdater", "Updater", "com.bfr.buddy.updater/com.bfr.buddy.updater.UpdaterActivity"));
-        put("launcher", new App("launcher", "Launcher", "apk", "BuildLauncher", "Launcher", "com.bfr.buddy.launcher/com.bfr.buddy.launcher.LauncherActivity"));
         put("core", new App("core", "BuddyCore", "apk", "BuildCore", "BuddyCore", "com.bfr.buddy.core/com.bfr.buddy.core.LauncherActivity"));
         put("sdk", new App("sdk", "BuddySDK", "aar", "BuildSDK", "BuddySDK", ""));
     }};
