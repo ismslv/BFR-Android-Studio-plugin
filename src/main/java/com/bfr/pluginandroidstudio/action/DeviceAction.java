@@ -67,7 +67,7 @@ public class DeviceAction extends AnAction {
 
         switch (iId) {
             case "device_reboot":
-                return "reboot";
+                return "setprop ctl.restart zygote";
             case "device_shutdown":
                 return "reboot -p";
             case "device_settings":

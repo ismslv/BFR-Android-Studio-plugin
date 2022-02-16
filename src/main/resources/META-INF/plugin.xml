@@ -70,10 +70,10 @@
                         text="Open File manager">
                 </action>
             </group>
-            <!--                <action id="device_reboot"-->
-            <!--                        class="com.bfr.pluginandroidstudio.action.DeviceAction"-->
-            <!--                        text="Reboot">-->
-            <!--                </action>-->
+            <action id="device_reboot"
+                    class="com.bfr.pluginandroidstudio.action.DeviceAction"
+                    text="Reboot">
+            </action>
             <action id="device_shutdown"
                     class="com.bfr.pluginandroidstudio.action.DeviceAction"
                     text="Shutdown">
