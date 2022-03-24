@@ -19,6 +19,7 @@ public class InstallAction extends AnAction {
 
     Project mProject;
     String[] ids;
+    String length;
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
@@ -60,7 +61,7 @@ public class InstallAction extends AnAction {
                 oCmd += "pm uninstall ";
                 break;
             case "install":
-                oCmd += "pm install -t ";
+                oCmd += "cat sdcard/tmp/" + iApp.FullID + ".apk | pm install -t -S " + length + " & input keyevent 3";
                 break;
             case "launch":
                 oCmd += "am start -n " + iApp.LaunchPackage;
@@ -69,8 +70,6 @@ public class InstallAction extends AnAction {
 
         if (iType.equals("stop") || iType.equals("uninstall"))
             oCmd += "com.bfr.buddy." + iApp.ID;
-        else if (iType.equals("install"))
-            oCmd += "sdcard/tmp/" + iApp.FullID + ".apk";
 
         return oCmd;
     }
@@ -95,6 +94,11 @@ public class InstallAction extends AnAction {
                 DeviceManager.CURRENT_DEVICE.executeShell(getCommand("stop", iApp));
                 iType = "launch";
             }
+
+            if (iType.equals("install"))
+                if (new File(iApp.getLocalFilePath()).exists())
+                    length = "" + new File(iApp.getLocalFilePath()).length();
+
             String _cmd = getCommand(iType, iApp);
             if (iType.equals("install")) {
                 if (new File(iApp.getLocalFilePath()).exists()) {
