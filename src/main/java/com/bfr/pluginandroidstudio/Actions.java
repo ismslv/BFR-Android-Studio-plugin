@@ -24,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -117,7 +119,7 @@ public class Actions {
     public static String getBuildConfig(String iApp, String iAct) {
         String oConfName;
         if (iApp.equals("all"))
-            oConfName = "BuildEverything";
+            oConfName = "Build Everything";
         else {
             switch (iAct) {
                 case "buildrun":
@@ -169,6 +171,21 @@ public class Actions {
                 }
             });
         }
+    }
+
+    public static File getLastFileInDir(String iDirName, FileFilter iFilter) {
+        File dir = new File(iDirName);
+
+        if (!dir.exists() || !dir.isDirectory())
+            return null;
+
+        File[] files = dir.listFiles(iFilter);
+        if (files != null && files.length > 0) {
+            Arrays.sort(files, Comparator.comparingLong(File::lastModified));
+            return files[files.length - 1];
+        }
+
+        return null;
     }
 
     @NotNull

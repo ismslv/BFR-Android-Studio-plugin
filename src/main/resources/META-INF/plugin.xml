@@ -151,6 +151,26 @@
                             text="Launch"/>
                 </group>
                 <separator />
+                <group id="group_apps_companion" text="Companion Service" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_companion_buildinstall"
+                            text="Build and install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.BuildAction"
+                            id="app_companion_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.FileAction"
+                            id="app_companion_showfile"
+                            text="Show file"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_companion_install"
+                            text="Install"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_companion_uninstall"
+                            text="Uninstall"/>
+                    <action class="com.bfr.pluginandroidstudio.action.InstallAction"
+                            id="app_companion_stop"
+                            text="Stop"/>
+                </group>
                 <group id="group_apps_usb" text="USB Service" popup="true">
                     <action class="com.bfr.pluginandroidstudio.action.BuildAction"
                             id="app_usb_buildinstall"
@@ -213,12 +233,118 @@
                 </group>
             </group>
             <group id="group_sdk" text="SDK" popup="true">
-                <action class="com.bfr.pluginandroidstudio.action.BuildAction"
-                        id="app_sdk_build"
-                        text="Build"/>
-                <action class="com.bfr.pluginandroidstudio.action.FileAction"
-                        id="app_sdk_showfile"
-                        text="Show file"/>
+                <group id="group_sdk_sdk" text="Full SDK" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_sdk_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_sdk_showfile"
+                            text="Show file"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_sdk_publish_snapshot"
+                            text="Publish Snapshot"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_sdk_publish_release"
+                            text="Publish Release"/>
+                </group>
+                <group id="group_sdk_utils" text="Utils lib" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_utils_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_utils_showfile"
+                            text="Show file"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_utils_publish_snapshot"
+                            text="Publish Snapshot"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_utils_publish_release"
+                            text="Publish Release"/>
+                </group>
+                <group id="group_sdk_ui" text="UI lib" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_ui_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_ui_showfile"
+                            text="Show file"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_ui_publish_snapshot"
+                            text="Publish Snapshot"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_ui_publish_release"
+                            text="Publish Release"/>
+                </group>
+                <group id="group_sdk_network" text="Network lib" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_network_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_network_showfile"
+                            text="Show file"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_network_publish_snapshot"
+                            text="Publish Snapshot"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_network_publish_release"
+                            text="Publish Release"/>
+                </group>
+                <group id="group_sdk_companion" text="Companion lib" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_companion_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_companion_showfile"
+                            text="Show file"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_companion_publish_snapshot"
+                            text="Publish Snapshot"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_companion_publish_release"
+                            text="Publish Release"/>
+                </group>
+                <group id="group_sdk_usb" text="USB lib" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_usb_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_usb_showfile"
+                            text="Show file"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_usb_publish_snapshot"
+                            text="Publish Snapshot"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_usb_publish_release"
+                            text="Publish Release"/>
+                </group>
+                <group id="group_sdk_speech" text="Speech lib" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_speech_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_speech_showfile"
+                            text="Show file"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_speech_publish_snapshot"
+                            text="Publish Snapshot"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_speech_publish_release"
+                            text="Publish Release"/>
+                </group>
+                <group id="group_sdk_vision" text="Vision lib" popup="true">
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_vision_build"
+                            text="Build"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_vision_showfile"
+                            text="Show file"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_vision_publish_snapshot"
+                            text="Publish Snapshot"/>
+                    <action class="com.bfr.pluginandroidstudio.action.SDKAction"
+                            id="sdk_vision_publish_release"
+                            text="Publish Release"/>
+                </group>
             </group>
             <separator />
             <group id="group_config_system" text="System Config" popup="true">

@@ -61,7 +61,7 @@ public class InstallAction extends AnAction {
                 oCmd += "pm uninstall ";
                 break;
             case "install":
-                oCmd += "cat sdcard/tmp/" + iApp.FullID + ".apk | pm install -t -S " + length + " & input keyevent 3";
+                oCmd += "pm install -t sdcard/tmp/" + iApp.FullID + ".apk & input keyevent 3";
                 break;
             case "launch":
                 oCmd += "am start -n " + iApp.LaunchPackage;
@@ -84,7 +84,7 @@ public class InstallAction extends AnAction {
     void pushFile(String iFilePath, App iApp) throws IOException, JadbException {
         DeviceManager.CURRENT_DEVICE.push(
                 new File(iFilePath),
-                new RemoteFile("sdcard/Updates/Local/" + iApp.FullID + ".apk")
+                new RemoteFile("sdcard/tmp/" + iApp.FullID + ".apk")
         );
     }
 
