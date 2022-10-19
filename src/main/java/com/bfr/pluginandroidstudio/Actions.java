@@ -21,7 +21,10 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Disposer;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -82,15 +85,26 @@ public class Actions {
     }
 
     public static void showFileInExplorer(String iPath, boolean iIsFolder) {
-        String command = "explorer.exe "
-                      + (iIsFolder ? "" : "/")
-                      + "select,\""
-                      + iPath.replace("/", "\\")
-                      + "\"";
-        try {
-            Runtime.getRuntime().exec(command);
-        } catch (IOException e) {
-            e.printStackTrace();
+//        String command = "explorer.exe "
+//                      + (iIsFolder ? "" : "/")
+//                      + "select,\""
+//                      + iPath.replace("/", "\\")
+//                      + "\"";
+//        try {
+//            Runtime.getRuntime().exec(command);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        File file = new File(iPath);
+        if (!iIsFolder) file = new File(file.getParent());
+
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().open(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -113,6 +127,16 @@ public class Actions {
             Runtime.getRuntime().exec("cmd /c rmdir /S /Q \"" + iPath.replace("/", "\\") + "\"");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void openURL(String url) {
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            try {
+                Desktop.getDesktop().browse(new URI(url));
+            } catch (IOException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
