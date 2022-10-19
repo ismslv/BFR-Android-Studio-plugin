@@ -1,9 +1,6 @@
 package com.bfr.pluginandroidstudio;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Common {
     public static LinkedHashMap<String, App> APPS = new LinkedHashMap<String, App>() {{
@@ -14,6 +11,12 @@ public class Common {
         put("updater", new App("updater", "Updater", "apk", "Build Updater", "Updater", "com.bfr.buddy.updater/com.bfr.buddy.updater.UpdaterActivity"));
         put("core", new App("core", "BuddyCore", "apk", "Build Core", "BuddyCore", "com.bfr.buddy.core/com.bfr.buddy.core.LauncherActivity"));
         put("sdk", new App("sdk", "BuddySDK", "aar", "Build SDK", "BuddySDK", ""));
+    }};
+
+    public static Dictionary<String, String> UPDATE_SERVERS = new Hashtable<String, String>() {{
+        put("test", "http://163.172.174.109:8081");
+        put("dev", "http://51.159.138.204:8081/");
+        put("prod", "http://163.172.175.35:8081");
     }};
 
     public static String[] SDKLIBS = new String[] {

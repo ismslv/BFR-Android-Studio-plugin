@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.bfr'
-version '0.9.95'
+version '0.9.96'
 
 sourceCompatibility = 1.8
 
@@ -19,7 +19,7 @@ configurations {
 
 dependencies {
     extraLibs 'com.github.vidstige:jadb:v1.2.1'
-    configurations.compile.extendsFrom(configurations.extraLibs)
+    configurations.implementation.extendsFrom(configurations.extraLibs)
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }

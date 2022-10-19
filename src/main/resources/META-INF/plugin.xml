@@ -404,10 +404,25 @@
                 </action>
             </group>
             <separator />
-            <action id="customapp_install"
-                    class="com.bfr.pluginandroidstudio.action.CustomAppAction"
-                    text="Install local app">
-            </action>
+            <group id="group_update" text="Update" popup="true">
+                <action id="open_server_test"
+                        class="com.bfr.pluginandroidstudio.action.OpenURLAction"
+                        text="Open Test in Browser">
+                </action>
+                <action id="open_server_dev"
+                        class="com.bfr.pluginandroidstudio.action.OpenURLAction"
+                        text="Open Dev in Browser">
+                </action>
+                <action id="open_server_prod"
+                        class="com.bfr.pluginandroidstudio.action.OpenURLAction"
+                        text="Open Prod in Browser">
+                </action>
+                <separator />
+                <action id="customapp_install"
+                        class="com.bfr.pluginandroidstudio.action.CustomAppAction"
+                        text="Install local app">
+                </action>
+            </group>
             <separator />
             <action id="config_system_devmodeon"
                     class="com.bfr.pluginandroidstudio.action.ConfigAction"
