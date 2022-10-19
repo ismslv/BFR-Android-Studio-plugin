@@ -78,6 +78,16 @@
                     class="com.bfr.pluginandroidstudio.action.DeviceAction"
                     text="Shutdown">
             </action>
+            <group id="group_adb" text="ADB commands" popup="true">
+                <action id="config_system_devmodeon"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Set Device Owner to Core">
+                </action>
+                <action id="config_system_devmodeoff"
+                        class="com.bfr.pluginandroidstudio.action.ConfigAction"
+                        text="Remove Device Owner to Core">
+                </action>
+            </group>
             <separator />
             <group id="group_apps" text="Apps" popup="true" icon="PluginIcons.APPS">
                 <group id="group_apps_all" text="Everything" popup="true">
@@ -423,15 +433,6 @@
                         text="Install local app">
                 </action>
             </group>
-            <separator />
-            <action id="config_system_devmodeon"
-                    class="com.bfr.pluginandroidstudio.action.ConfigAction"
-                    text="Switch to dev mode">
-            </action>
-            <action id="config_system_devmodeoff"
-                    class="com.bfr.pluginandroidstudio.action.ConfigAction"
-                    text="Switch to prod mode">
-            </action>
         </group>
     </actions>
 </idea-plugin>
